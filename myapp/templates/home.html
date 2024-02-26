@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enviar Dados para a View Django</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+
+            $(".btn-enviar").click(function() {
+                var id = $(this).data("id");
+                if ($(this).text() === "Clique Aqui") {
+                    $(this).text("Clicado");
+                    $(this).css('background-color', 'red');
+                
+            
+                } else {
+                    $(this).text("Clique Aqui");
+                    $(this).css('background-color', '');
+                }
+                // Dado que você quer enviar
+                var dado = "Dado de exemplo";
+                var algo ='ISSO AQUI'
+                // Faz uma requisição AJAX POST para a view Django
+                $.ajax({
+                    url: '{% url "processamento" %}', // URL da view Django
+                    method: 'GET',
+                
+                    data: {'dado': dado,'algo':algo,'id':id}, // Dado a ser enviado
+                    success: function(response) {
+                        console.log(response); // Loga a resposta da view no console
+                    },
+                    error: function(error) {
+                        console.error('Erro:', error); // Loga o erro no console
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Botão que dispara o evento -->
+    <button class ="btn-enviar" data-id = '1'>Clique Aqui</button>
+    <button class ="btn-enviar" data-id = '2'>Clique Aqui</button>
+    <button class ="btn-enviar" data-id = '3'>Clique Aqui</button>
+</body>
+</html>
